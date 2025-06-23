@@ -5,12 +5,12 @@ import LandingPage from './pages/LandingPage'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import AboutPage from './pages/AboutPage'
-import Dashboard from './pages/dashboard/Dashboard'
 
+import AdminDashboard from './dashboard/AdminDasboard/AdminDashboard'
 import Error from './components/error/Error'
 import ServicesPage from './pages/ServicesPage'
 import VerifyUser from './pages/VerifyUser'
-import Welcome from './pages/dashboard/Welcome'
+import Welcome from './dashboard/Welcome'
 import { Toaster } from 'sonner'
 
 
@@ -42,12 +42,25 @@ function App() {
       element: <ServicesPage/>
     },
     {
-      path: '/dashboard',
-      element: <Dashboard />,
+      path: 'admin/dashboard',
+      element: <AdminDashboard />,
       children: [
+       
+         {
+          path: 'cars',
+          element: <h1> Analytics </h1>
+        },
+         {
+          path: 'users',
+          element: <h1> Analytics </h1>
+        },
+         {
+          path: 'profile',
+          element: <h1> Analytics </h1>
+        },
         {
-          path: 'main',
-          element: <Welcome/>
+          path: 'analytics',
+          element: <Welcome />
         },
         
         // {

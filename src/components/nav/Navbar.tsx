@@ -22,7 +22,7 @@ const Navbar = () => {
                                 </li> 
                           
                                 <li className="font-bold text-lg">
-                                     <NavLink to="/dashboard">Dashboard</NavLink>
+                                     <NavLink to="/admin/dashboard/cars">Dashboard</NavLink>
                                 </li>
                                    <li className="font-bold text-lg">
                                      <NavLink to="/services">Services</NavLink>
@@ -49,7 +49,7 @@ const Navbar = () => {
                             <NavLink to="/about">About</NavLink>
                         </li>
                         <li className="font-bold text-lg"> 
-                            <NavLink to="/dashboard">Dashboard</NavLink>
+                            <NavLink to="/admin/dashboard/cars">Dashboard</NavLink>
                         </li>
                         <li className="font-bold text-lg"> 
                             <NavLink to="/services">Services</NavLink>
