@@ -1,8 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { APIDomain } from '../../utils/APIDomain';
+import type { RootState } from '../../app/store';
 
 export type TCustomer = {
-    id: number; 
+    customerID: number; 
     firstName: string;
     lastName: string;
     email: string;
@@ -20,7 +21,15 @@ export type TverifyUser = {
 export const userAPI = createApi({
     reducerPath: 'userAPI',
     baseQuery: fetchBaseQuery({
-        baseUrl : APIDomain
+        baseUrl : APIDomain,
+        prepareHeaders: (headers, {getState}) => {
+                  const token = (getState() as RootState).user.token;
+                  if (token) {
+                      headers.set('Authorization', `Bearer ${token}`);
+                  }
+                  headers.set('Content-Type', 'application/json');
+                  return headers;
+              }  
     }),
     tagTypes: ['Users'],
     endpoints: (builder) => ({
@@ -40,6 +49,30 @@ export const userAPI = createApi({
             }),
             invalidatesTags: ['Users'],
         }),
-    })
-    })
+    //     getUsers: builder.query<TCustomer[], void>({
+    //         query: () => '/customer',
+    //         providesTags: ['Users']
+    // }),
+    getUsers: builder.query<TCustomer[], void>({
+    query: () => '/customer',
+    transformResponse: (response: { customers: TCustomer[] }) => response.customers, // ✅ Fix here
+    providesTags: ['Users'],
+}),
+
+    updateUser: builder.mutation<TCustomer, Partial<TCustomer> & { customerID: number }>({
+            query: (updatedUser) => ({
+                url: `/customer/${updatedUser.customerID}`,
+                method: 'PUT',
+                body: updatedUser,
+            }),
+            invalidatesTags: ['Users']
+        }),
+       getUserById: builder.query<{ customer: TCustomer }, number>({
+    query: (customerID) => `/customer/${customerID}`,
+    providesTags: ['Users'],
+}),
+
+    }),
+})
+    
 

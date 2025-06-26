@@ -45,7 +45,7 @@ const serviceList = [
 
 const Services = () => {
     return (
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8 h-fit p-4 md:p-8">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-8 h-fit p-4 md:p-8 bg-blue-300">
            
             <div className="w-full md:w-1/2 flex items-center mb-6 md:mb-0">
                 <img

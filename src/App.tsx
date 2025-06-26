@@ -12,6 +12,9 @@ import ServicesPage from './pages/ServicesPage'
 import VerifyUser from './pages/VerifyUser'
 import Welcome from './dashboard/Welcome'
 import { Toaster } from 'sonner'
+import Cars from './dashboard/AdminDasboard/cars/Cars'
+import Users from './dashboard/AdminDasboard/manageUsers/Users'
+import Bookings from './dashboard/AdminDasboard/bookings/Bookings'
 
 
 
@@ -48,11 +51,15 @@ function App() {
        
          {
           path: 'cars',
-          element: <h1> Analytics </h1>
+          element: <Cars />
         },
          {
           path: 'users',
-          element: <h1> Analytics </h1>
+          element: <Users/>
+        },
+         {
+          path: 'bookings',
+          element: <Bookings/>
         },
          {
           path: 'profile',

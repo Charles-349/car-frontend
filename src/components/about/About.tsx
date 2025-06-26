@@ -3,7 +3,7 @@ import CarManager from '../../assets/images/services.jpeg';
 const About = () => {
     return (
         <div>
-            <div className="flex flex-col md:flex-row justify-between gap-8 h-fit p-4 md:p-8 bg-amber-200">
+            <div className="flex flex-col md:flex-row justify-between gap-8 h-fit p-4 md:p-8 bg-blue-300">
                 <div className="w-full md:w-1/2 flex items-center">
                     <img
                         src={CarManager}

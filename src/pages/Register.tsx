@@ -31,7 +31,7 @@ const schema = yup.object({
 function Register() {
 
     const navigate = useNavigate();
-    const [createCustomer] = userAPI.useCreateCustomerMutation();
+    const [createCustomer, {isLoading}] = userAPI.useCreateCustomerMutation();
     const {
         register,
         handleSubmit,
@@ -56,6 +56,7 @@ function Register() {
         } catch (error) {
             console.error('Registration failed:', error);
             toast.error('Registration failed. Please try again.');
+            
             
         }
     };
@@ -142,8 +143,12 @@ function Register() {
                         <span className=" text-red-700 text-sm">{errors.confirmPassword.message}</span>
                     )}
 
-                    <button type="submit" className="btn btn-primary w-full mt-4">
-                        Register
+                    <button type="submit" className="btn btn-primary w-full mt-4" disabled={isLoading}>
+                       {isLoading ? (
+                                <>
+                                    <span className="loading loading-bars loading-xl" /> Registering...
+                                </>
+                            ) : "Register"}
                     </button>
                 </form>
                 <p className="mt-6 text-center text-gray-600">

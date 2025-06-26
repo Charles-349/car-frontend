@@ -19,7 +19,7 @@ const schema = yup.object({
 });
 
 const VerifyUser = () => {
-    const [verifyCustomer] = userAPI.useVerifyUserMutation();
+    const [verifyCustomer, {isLoading}] = userAPI.useVerifyUserMutation();
     const navigate = useNavigate()
     const location = useLocation(); 
     const emailFromState = location.state?.email || '';
@@ -86,7 +86,11 @@ const VerifyUser = () => {
                         className="btn btn-primary w-full mt-4"
                         disabled={isSubmitting}
                     >
-                        Verify
+                        {isLoading ? (
+                                <>
+                                    <span className="loading loading-bars loading-xl" /> Verifying...
+                                </>
+                            ) : "Verify"}
                     </button>
                 </form>
             </div>

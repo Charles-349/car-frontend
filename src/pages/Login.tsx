@@ -9,6 +9,7 @@ import { loginSuccess } from '../features/users/userSlice';
 import {toast} from 'sonner';
 
 
+
 type LoginInputs = {
     email: string;
     password: string;
@@ -24,7 +25,7 @@ function Login() {
     const dispatch = useDispatch();
     const location = useLocation();
     const emailFromState = location.state?.email || '';
-    const [loginUser] = loginAPI.useLoginUserMutation(); 
+    const [loginUser, {isLoading}] = loginAPI.useLoginUserMutation(); 
     
     const {
         register,
@@ -45,11 +46,12 @@ function Login() {
              dispatch(loginSuccess({
              token: response.token,
              customer: response.customer,
+             
     }));
             console.log('Login successful:', response);
             toast.success('Login successful! Redirecting to dashboard...');
-
-            navigate('/dashboard/main')
+         
+            navigate('/admin/dashboard/cars')
             
         } catch (error) {
             console.error('Login failed. Please check your credentials and try again.', error);
@@ -87,8 +89,12 @@ function Login() {
                         <span className="text-sm text-red-700">{errors.password.message}</span>
                     )}
 
-                    <button type="submit" className="btn btn-primary w-full mt-4">
-                        Login
+                    <button type="submit" className="btn btn-primary w-full mt-4" disabled={isLoading}>
+                        {isLoading ? (
+                                <>
+                                    <span className="loading loading-bars loading-xl" /> Logging in...
+                                </>
+                            ) : "Login"}
                     </button>
                 </form>
                 <div className="mt-6 flex flex-col items-center space-y-2">

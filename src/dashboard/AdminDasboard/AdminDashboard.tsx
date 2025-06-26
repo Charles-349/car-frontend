@@ -15,7 +15,7 @@ const AdminDashboard = () => {
     return (
         <div className="flex flex-col min-h-screen">
             <Navbar />
-                <div className="flex px-4 py-4 bg-gray-700 items-center">
+                <div className="flex px-4 py-4 bg-blue-800 items-center">
                
                 <button
                     className="mr-4 text-white text-2xl lg:hidden"
@@ -30,7 +30,7 @@ const AdminDashboard = () => {
             <div className="flex flex-1">
                 <aside
                      className={`
-                        fixed top-0 z-40 w-64 bg-gray-600
+                        fixed top-0 z-40 w-64 bg-blue-600
                         ${drawerOpen ? "" : "hidden"} 
                         lg:static lg:block lg:w-64
                         `}
@@ -47,7 +47,7 @@ const AdminDashboard = () => {
                 <AdminDrawer />
                     </div>
                 </aside>
-                <main className="flex-1 p-4 bg-gray-400 min-h-screen">
+                <main className="flex-1 p-4 bg-blue-300 min-h-screen">
                     <Outlet />
                 </main>
             </div>
