@@ -51,7 +51,11 @@ function Login() {
             console.log('Login successful:', response);
             toast.success('Login successful! Redirecting to dashboard...');
          
-            navigate('/admin/dashboard/cars')
+            if (response.customer.role === 'admin') {
+                navigate('/admin/dashboard/cars');
+            } else if (response.customer.role === 'user') {
+                navigate('/user/dashboard/cars');
+            }
             
         } catch (error) {
             console.error('Login failed. Please check your credentials and try again.', error);

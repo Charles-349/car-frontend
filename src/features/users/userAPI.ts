@@ -13,6 +13,7 @@ export type TCustomer = {
     isVerified: boolean;    
     verificationCode: string;
     verificationCodeExpiresAt: Date;
+    image_url?: string;
 };
 export type TverifyUser = {
     email: string;

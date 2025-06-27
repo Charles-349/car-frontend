@@ -15,10 +15,16 @@ import { Toaster } from 'sonner'
 import Cars from './dashboard/AdminDasboard/cars/Cars'
 import Users from './dashboard/AdminDasboard/manageUsers/Users'
 import Bookings from './dashboard/AdminDasboard/bookings/Bookings'
+import Profile from './dashboard/Profile'
+import UserDashboard from './dashboard/UserDashboard/UserDashboard'
+import { useSelector } from 'react-redux'
+import type { RootState } from './app/store'
 
 
 
 function App() {
+  const isAdmin = useSelector((state: RootState) => state.user.customer?.role === 'admin');
+  const isUser = useSelector((state: RootState) => state.user.customer?.role === 'user');
   const router = createBrowserRouter([
     {
       path: '/',
@@ -46,7 +52,7 @@ function App() {
     },
     {
       path: 'admin/dashboard',
-      element: <AdminDashboard />,
+      element: isAdmin ? <AdminDashboard /> : <Login />,
       children: [
        
          {
@@ -63,17 +69,44 @@ function App() {
         },
          {
           path: 'profile',
-          element: <h1> Analytics </h1>
+          element: <Profile/>
         },
         {
           path: 'analytics',
           element: <Welcome />
         },
-        
-        // {
-        //   path: 'profile',
-        //   element: <h1>Analytics</h1>
-        // }
+      ]
+    },
+    {
+      path: '*',
+      element: <Error />
+    },
+
+    {
+      path: 'user/dashboard',
+       element: isUser ? <UserDashboard /> : <Login />,
+      children: [
+       
+         {
+          path: 'cars',
+          element: <Cars />
+        },
+         {
+          path: 'users',
+          element: <Users/>
+        },
+         {
+          path: 'bookings',
+          element: <Bookings/>
+        },
+         {
+          path: 'profile',
+          element: <Profile/>
+        },
+        {
+          path: 'analytics',
+          element: <Welcome />
+        },
       ]
     },
     {
@@ -81,6 +114,9 @@ function App() {
       element: <Error />
     }
   ])
+
+
+  
 
   return (
     <>
