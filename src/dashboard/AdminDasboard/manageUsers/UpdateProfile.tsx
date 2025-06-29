@@ -96,9 +96,9 @@ const UpdateProfile = ({ user, refetch }: UpdateProfileProps) => {
                 setIsUploading(true);
                 const formData = new FormData();
                 formData.append('file', image);
-                formData.append('upload_preset', 'todoclient')
+                formData.append('upload_preset', 'carlearning')
                 const response = await axios.post(
-                    'https://api.cloudinary.com/v1_1/dl3ovuqjn/image/upload',
+                    'https://api.cloudinary.com/v1_1/dlv6jnahg/image/upload',
                     formData
                 )
                 console.log("Cloudinary response:", response.data);

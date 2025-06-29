@@ -5,8 +5,15 @@ import Footer from "../../components/footer/Footer"
 import { FaBars } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
 import { useState } from "react";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../app/store";
+
 const AdminDashboard = () => {
         const [drawerOpen, setDrawerOpen] = useState(false);
+       const name = useSelector((state: RootState) =>
+  state.user?.customer?.firstName || "Admin"
+);
+
 
     const handleDrawerToggle = () => {
         setDrawerOpen((prev) => !prev);
@@ -24,7 +31,7 @@ const AdminDashboard = () => {
                     {drawerOpen ? <IoCloseSharp /> : <FaBars />}
                 </button>
                 <span className="text-white text-lg font-semibold">
-                    Welcome to your Admin dashboard
+                    Welcome <span className="font-bold text-red-400 text-2xl">{name}</span> to your Admin dashboard
                 </span>
             </div>
             <div className="flex flex-1">

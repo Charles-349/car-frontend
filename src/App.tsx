@@ -19,6 +19,9 @@ import Profile from './dashboard/Profile'
 import UserDashboard from './dashboard/UserDashboard/UserDashboard'
 import { useSelector } from 'react-redux'
 import type { RootState } from './app/store'
+import UserBookings from './dashboard/UserDashboard/bookings/UserBookings'
+import Payments from './dashboard/AdminDasboard/payments/Payments'
+import UserPayment from './dashboard/UserDashboard/payments/UserPayment'
 
 
 
@@ -67,6 +70,10 @@ function App() {
           path: 'bookings',
           element: <Bookings/>
         },
+          {
+          path: 'payments',
+          element: <Payments/>
+        },
          {
           path: 'profile',
           element: <Profile/>
@@ -86,18 +93,13 @@ function App() {
       path: 'user/dashboard',
        element: isUser ? <UserDashboard /> : <Login />,
       children: [
-       
-         {
-          path: 'cars',
-          element: <Cars />
-        },
-         {
-          path: 'users',
-          element: <Users/>
-        },
          {
           path: 'bookings',
-          element: <Bookings/>
+          element: <UserBookings/>
+        },
+          {
+          path: 'payments',
+          element: <UserPayment/>
         },
          {
           path: 'profile',

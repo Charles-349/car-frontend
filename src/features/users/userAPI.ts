@@ -50,13 +50,9 @@ export const userAPI = createApi({
             }),
             invalidatesTags: ['Users'],
         }),
-    //     getUsers: builder.query<TCustomer[], void>({
-    //         query: () => '/customer',
-    //         providesTags: ['Users']
-    // }),
     getUsers: builder.query<TCustomer[], void>({
     query: () => '/customer',
-    transformResponse: (response: { customers: TCustomer[] }) => response.customers, // ✅ Fix here
+    transformResponse: (response: { customers: TCustomer[] }) => response.customers, 
     providesTags: ['Users'],
 }),
 

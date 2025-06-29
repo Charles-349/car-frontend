@@ -1,7 +1,13 @@
+import { useSelector } from 'react-redux';
 import logo from '../../assets/images/logo.png';
 import { NavLink } from 'react-router-dom';
+import type { RootState } from '../../app/store';
 
 const Navbar = () => {
+    const userrole = useSelector((state: RootState) => state.user.customer?.role);
+    const userToken = useSelector((state: RootState) => state.user.token);
+    const isAdmin = userrole === 'admin';
+    const isUser = userrole === 'user';
     return (
         <div>
             <div className="navbar bg-base-700 shadow-sm h-25 bg-blue-500">
@@ -22,17 +28,23 @@ const Navbar = () => {
                                 </li> 
                           
                                 <li className="font-bold text-lg">
-                                     <NavLink to="/admin/dashboard/cars">Dashboard</NavLink>
+                                     <NavLink to={isAdmin ? "/admin/dashboard/cars" : isUser ? "/user/dashboard/bookings" : "/dashboard/analytics"}>
+                                    Dashboard
+                                </NavLink>
                                 </li>
                                    <li className="font-bold text-lg">
                                      <NavLink to="/services">Services</NavLink>
                                 </li>
-                                <li className="font-bold text-lg">
-                                    <NavLink to="/register">Register</NavLink>
-                                </li>
-                                <li className="font-bold text-lg">
-                                    <NavLink to="/login">Login</NavLink>
-                                </li>
+                                 {!userToken && (
+                                    <>
+                                        <li className="font-bold text-lg list-none">
+                                            <NavLink to="/register">Register</NavLink>
+                                        </li>
+                                        <li className="font-bold text-lg list-none">
+                                            <NavLink to="/login">Login</NavLink>
+                                        </li>
+                                    </>
+                                )}
                             </ul>
                         </ul>
                     </div>
@@ -49,7 +61,9 @@ const Navbar = () => {
                             <NavLink to="/about">About</NavLink>
                         </li>
                         <li className="font-bold text-lg"> 
-                            <NavLink to="/admin/dashboard/cars">Dashboard</NavLink>
+                             <NavLink to={isAdmin ? "/admin/dashboard/cars" : isUser ? "/user/dashboard/bookings" : "/dashboard/analytics"}>
+                                    Dashboard
+                                </NavLink>
                         </li>
                         <li className="font-bold text-lg"> 
                             <NavLink to="/services">Services</NavLink>
@@ -59,14 +73,18 @@ const Navbar = () => {
                 </div>
                 <div className="navbar-end">
                     <div className='flex gap-4 mr-4'>
-                        <li className="font-bold text-lg list-none">
-                            <NavLink to="/register">Register</NavLink>
-                        </li>
-                        <li className="font-bold text-lg list-none">
-                            <NavLink to="/login">Login</NavLink>
-                        </li>
+                      {!userToken && (
+                                    <>
+                                        <li className="font-bold text-lg list-none">
+                                            <NavLink to="/register">Register</NavLink>
+                                        </li>
+                                        <li className="font-bold text-lg list-none">
+                                            <NavLink to="/login">Login</NavLink>
+                                        </li>
+                                    </>
+                                )}
                     </div>
-                    {/* <a className="btn">Profile</a> */}
+                   
                 </div>
             </div >
         </div >

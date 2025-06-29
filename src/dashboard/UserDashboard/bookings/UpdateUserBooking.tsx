@@ -7,6 +7,7 @@ import { bookingsAPI, type TBooking } from "../../../features/bookings/bookingsA
 
 type UpdateBookingProps = {
     booking: TBooking | null;
+    refetch: () => void;
 };
 
 type UpdateBookingInputs = {
@@ -27,7 +28,7 @@ const schema = yup.object({
     totalAmount: yup.number().required("Total amount is required").positive("Must be positive"),
 });
 
-const UpdateBooking = ({ booking }: UpdateBookingProps) => {
+const UpdateUserBooking = ({ booking, refetch }: UpdateBookingProps) => {
     const [updateBooking, { isLoading }] = bookingsAPI.useUpdateBookingMutation();
 
     const {
@@ -42,9 +43,7 @@ const UpdateBooking = ({ booking }: UpdateBookingProps) => {
 
     useEffect(() => {
         if (booking) {
-            setValue("bookingID", booking.bookingID);
             setValue("carID", booking.carID);
-            setValue("customerID", booking.customerID);
             setValue("rentalStartDate", booking.rentalStartDate);
             setValue("rentalEndDate", booking.rentalEndDate);
             setValue("totalAmount", booking.totalAmount);
@@ -62,6 +61,7 @@ const UpdateBooking = ({ booking }: UpdateBookingProps) => {
             await updateBooking({ ...data, bookingID: booking.bookingID }).unwrap();
             toast.success("Booking updated successfully");
             reset();
+            refetch();
             (document.getElementById("update_modal") as HTMLDialogElement)?.close();
         } catch (error) {
             console.error("Error updating booking:", error);
@@ -74,12 +74,6 @@ const UpdateBooking = ({ booking }: UpdateBookingProps) => {
             <div className="modal-box bg-gray-600 text-white w-full max-w-xs sm:max-w-lg mx-auto rounded-lg">
                 <h3 className="font-bold text-lg mb-4">Update Booking</h3>
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-                    <input
-                        type="number"
-                        {...register("bookingID")}
-                        placeholder="Booking ID"
-                        className="input rounded w-full p-2 focus:ring-2 focus:ring-blue-500 text-lg bg-white text-gray-800"
-                    />
                     {errors.bookingID && <span className="text-sm text-red-700">{errors.bookingID.message}</span>}
 
                     <input
@@ -89,13 +83,6 @@ const UpdateBooking = ({ booking }: UpdateBookingProps) => {
                         className="input rounded w-full p-2 focus:ring-2 focus:ring-blue-500 text-lg bg-white text-gray-800"
                     />
                     {errors.carID && <span className="text-sm text-red-700">{errors.carID.message}</span>}
-
-                    <input
-                        type="number"
-                        {...register("customerID")}
-                        placeholder="Customer ID"
-                        className="input rounded w-full p-2 focus:ring-2 focus:ring-blue-500 text-lg bg-white text-gray-800"
-                    />
                     {errors.customerID && <span className="text-sm text-red-700">{errors.customerID.message}</span>}
 
                     <input
@@ -154,4 +141,4 @@ const UpdateBooking = ({ booking }: UpdateBookingProps) => {
     );
 };
 
-export default UpdateBooking;
+export default UpdateUserBooking;

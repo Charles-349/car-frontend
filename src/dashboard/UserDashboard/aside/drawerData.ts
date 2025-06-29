@@ -1,5 +1,4 @@
-import { FaCarSide } from "react-icons/fa6";
-import { FiUsers } from "react-icons/fi";
+
 import { FaUserCheck } from "react-icons/fa6";
 import { TbBrandGoogleAnalytics } from "react-icons/tb";
 import { TbBrandBooking } from "react-icons/tb";
@@ -16,12 +15,6 @@ export type DrawerData = {
     link:string
 } 
 export const userDrawerData: DrawerData[] = [
-    {
-        id: 'cars',
-        name: 'Cars',
-        icon: FaCarSide,
-        link: 'cars'
-    },
      {
         id: 'bookings',
         name: 'Bookings',
@@ -58,12 +51,7 @@ export const userDrawerData: DrawerData[] = [
         icon:  FaLocationDot,
         link: 'locations'
     },
-    {
-        id: 'users',
-        name: 'Users',
-        icon: FiUsers,
-        link: 'users'
-    },
+    
     {
         id: 'profile',
         name: 'Profile',

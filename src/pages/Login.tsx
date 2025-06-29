@@ -10,6 +10,7 @@ import {toast} from 'sonner';
 
 
 
+
 type LoginInputs = {
     email: string;
     password: string;
@@ -41,6 +42,8 @@ function Login() {
     const onSubmit: SubmitHandler<LoginInputs> = async(data) => {
         console.log('Login data:', data);
 
+
+
         try {
             const response = await loginUser(data).unwrap();
              dispatch(loginSuccess({
@@ -54,7 +57,7 @@ function Login() {
             if (response.customer.role === 'admin') {
                 navigate('/admin/dashboard/cars');
             } else if (response.customer.role === 'user') {
-                navigate('/user/dashboard/cars');
+                navigate('/user/dashboard/bookings');
             }
             
         } catch (error) {
@@ -62,14 +65,14 @@ function Login() {
             toast.error('Login failed. Please check your credentials and try again.');
             
         }
-        //TO API
+        
     };
 
     return (
         <div className="flex justify-center items-center min-h-screen bg-base-200 ">
             <div className="w-full max-w-lg p-8 rounded-xl shadow-lg bg-white">
                 <h1 className="text-3xl font-bold mb-6 text-center">Login to Your Account</h1>
-                {/* Display any error messages here if needed */}
+               
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 
                     <input
@@ -77,7 +80,7 @@ function Login() {
                         {...register('email')}
                         placeholder="Email"
                         className='input border border-gray-300 rounded w-full p-2 focus:ring-2 focus:ring-blue-500 text-lg '
-                        readOnly={!!emailFromState} // Make email read-only if provided from state
+                        readOnly={!!emailFromState} 
                     />
                     {errors.email && (
                         <span className="text-sm  text-red-700">{errors.email.message}</span>

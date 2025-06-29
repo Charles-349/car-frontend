@@ -2,22 +2,28 @@ import { useState } from "react";
 import { bookingsAPI, type TBooking } from "../../../features/bookings/bookingsAPI";
 import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
-import UpdateBooking from "./UpdateBooking";
+import UpdateUserBooking from "./UpdateUserBooking";
 import CreateBooking from "./CreateBooking";
 import DeleteBooking from "./DeleteBooking";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../../app/store";
 
-const Bookings = () => {
+const UserBookings = () => {
     const [selectedBooking, setSelectedBooking] = useState<TBooking | null>(null);
     const [bookingToDelete, setBookingToDelete] = useState<TBooking | null>(null);
     const [searchId, setSearchId] = useState("");
     const [triggerSearch, { data: searchedBooking, isFetching: isSearching, error: searchError }] = bookingsAPI.useLazyGetBookingByIdQuery();
 
-    const { data: bookingsData, isLoading: bookingsLoading, error: bookingsError } = bookingsAPI.useGetBookingsQuery(undefined, {
-        refetchOnMountOrArgChange: true,
-        pollingInterval: 10000,
-        refetchOnFocus: true,
-        refetchOnReconnect: true,
-    });
+   const user = useSelector((state: RootState) => state.user.customer);
+    const customerID = user?.customerID; 
+
+    const { data: bookingData, isLoading: bookingsLoading, error: bookingError, refetch: refetchBookings } = bookingsAPI.useGetBookingsByCustomerIdQuery(
+        customerID ?? 0, 
+        {
+            skip: !customerID, 
+            refetchOnMountOrArgChange: true,  
+        }
+    )
 
     const handleEdit = (booking: TBooking) => {
         setSelectedBooking(booking);
@@ -31,7 +37,7 @@ const Bookings = () => {
 
     return (
         <div>
-            <UpdateBooking booking={selectedBooking} />
+             <UpdateUserBooking booking={selectedBooking} refetch={refetchBookings} />
             <CreateBooking />
             <DeleteBooking booking={bookingToDelete} />
 
@@ -96,9 +102,9 @@ const Bookings = () => {
             )}
 
             {bookingsLoading && <p>Loading Bookings...</p>}
-            {bookingsError && <p className="text-red-500">Error fetching bookings!</p>}
+            {bookingError && <p className="text-red-500">Error fetching bookings!</p>}
 
-            {bookingsData && bookingsData.bookings && bookingsData.bookings.length > 0 ? (
+            {bookingData && bookingData.bookings && bookingData.bookings.length > 0 ? (
                 <div className="md:overflow-x-auto">
                     <table className="table table-xs">
                         <thead>
@@ -113,7 +119,7 @@ const Bookings = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {bookingsData.bookings.map((booking: TBooking) => (
+                            {bookingData.bookings.map((booking: TBooking) => (
                                 <tr key={booking.bookingID} className="hover:bg-gray-300 border-b border-gray-400">
                                     <td>{booking.bookingID}</td>
                                     <td>{booking.carID}</td>
@@ -144,4 +150,4 @@ const Bookings = () => {
     );
 };
 
-export default Bookings;
+export default UserBookings;
